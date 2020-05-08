@@ -74,7 +74,7 @@ void TimerSet(unsigned long M) {
 enum States {Start, A, B, C, D, buttPress, Wait} state; 
 unsigned char tmpA; 
 unsigned char tmpB;
-unsigned char firstPress = 1; //Used as a bool value, to determine if button was pressed before or not 
+unsigned char ableToPause = 1; //Bool value. Used to determine if able to be paused  
 
 void Tick() {
 	switch(state) { //transitions:
@@ -83,16 +83,16 @@ void Tick() {
 			break;
 
 		case A: 
-			if ( ((tmpA & 0x01) == 0x01) && (firstPress == 1)  ) { //button pressed 1st time
+			if ( ((tmpA & 0x01) == 0x01) && (ableToPause == 1)  ) { //button pressed 1st time
 				state = buttPress;
-				firstPress = 0;	
+				ableToPause = 0;	
 			}
 
 			//After releasing the button after the second time, able to be paused  normally as above  
-			else if ( ((tmpA & 0x01) == 0x00) && (firstPress == 0)) {
+			else if ( ((tmpA & 0x01) == 0x00) && (ableToPause == 0)) {
 				//state = buttPress;
 				state = B;
-				firstPress = 1;
+				ableToPause = 1;
 				
 			}
 			
@@ -102,16 +102,17 @@ void Tick() {
 			}
 			break;
 
-		case B:  
-			if ( ((tmpA & 0x01) == 0x01) && (firstPress == 1)) { //button pressed 1st time
+		case B:   
+			if ( ((tmpA & 0x01) == 0x01) && (ableToPause == 1)  ) { //button pressed 1st time
 				state = buttPress;
-				firstPress = 0;	
+				ableToPause = 0;	
 			}
-			//CHANGED
-			else if ( ((tmpA & 0x01) == 0x00) && (firstPress == 0)) {
+
+			//After releasing the button after the second time, able to be paused  normally as above  
+			else if ( ((tmpA & 0x01) == 0x00) && (ableToPause == 0)) {
 				//state = buttPress;
 				state = C;
-				firstPress = 1;
+				ableToPause = 1;	
 			}
 			
 			else { //else go to next part of sequence
@@ -119,16 +120,17 @@ void Tick() {
 			}
 			break;
 
-		case C:   
-			if ( ((tmpA & 0x01) == 0x01) && (firstPress == 1)) { //button pressed 1st time
+		case C:      
+			if ( ((tmpA & 0x01) == 0x01) && (ableToPause == 1)  ) { //button pressed 1st time
 				state = buttPress;
-				firstPress = 0;	
+				ableToPause = 0;	
 			}
-			//CHANGED 
-			else if ( ((tmpA & 0x01) == 0x00) && (firstPress == 0)) {
+
+			//After releasing the button after the second time, able to be paused  normally as above  
+			else if ( ((tmpA & 0x01) == 0x00) && (ableToPause == 0)) {
 				//state = buttPress;
 				state = D;
-				firstPress = 1;
+				ableToPause = 1;	
 			}
 			
 			else { //else go to next part of sequence
@@ -136,17 +138,19 @@ void Tick() {
 			}
 			break;
 
-		case D:  
-			if ( ((tmpA & 0x01) == 0x01) && (firstPress == 1)) { //button pressed 1st time
+		case D:     
+			if ( ((tmpA & 0x01) == 0x01) && (ableToPause == 1)  ) { //button pressed 1st time
 				state = buttPress;
-				firstPress = 0;	
+				ableToPause = 0;	
 			}
-			//CHANGED
-			else if ( ((tmpA & 0x01) == 0x00) && (firstPress == 0)) {
+
+			//After releasing the button after the second time, able to be paused  normally as above  
+			else if ( ((tmpA & 0x01) == 0x00) && (ableToPause == 0)) {
 				//state = buttPress;
-				state = A;
-				firstPress = 1;
+				state = D;
+				ableToPause = 1;	
 			}
+			
 			else { //else go to next part of sequence
 				state = A;
 			}
