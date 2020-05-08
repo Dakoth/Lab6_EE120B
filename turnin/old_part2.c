@@ -74,7 +74,6 @@ void TimerSet(unsigned long M) {
 enum States {Start, A, B, C, D, buttPress, Wait} state; 
 unsigned char tmpA; 
 unsigned char tmpB;
-unsigned char firstPress = 1; //Used as a bool value, to determine if button was pressed before or not 
 
 void Tick() {
 	switch(state) { //transitions:
@@ -83,54 +82,35 @@ void Tick() {
 			break;
 
 		case A: 
-			if ( ((tmpA & 0x01) == 0x01) && (firstPress == 1)  ) { //button pressed 1st time
-				state = buttPress;
-				firstPress = 0;	
+			if ( (tmpA & 0x01) == 0x01 ) { //If button is pressed 
+				state = buttPress;	
 			}
-			else if ( ((tmpA & 0x01) == 0x00) && (firstPress == 0)) {
-				state = buttPress;
-			}
-			
 			else { //else go to next part of sequence
 				state = B;
 			}
 			break;
 
-		case B:  
-			if ( ((tmpA & 0x01) == 0x01) && (firstPress == 1)) { //button pressed 1st time
-				state = buttPress;
-				firstPress = 0;	
+		case B: 
+			if ( (tmpA & 0x01) == 0x01 ) { //If button is pressed 
+				state = buttPress;	
 			}
-			else if ( ((tmpA & 0x01) == 0x00) && (firstPress == 0)) {
-				state = buttPress;
-			}
-			
 			else { //else go to next part of sequence
 				state = C;
 			}
 			break;
 
-		case C:   
-			if ( ((tmpA & 0x01) == 0x01) && (firstPress == 1)) { //button pressed 1st time
-				state = buttPress;
-				firstPress = 0;	
+		case C: 
+			if ( (tmpA & 0x01) == 0x01 ) { //If button is pressed 
+				state = buttPress;	
 			}
-			else if ( ((tmpA & 0x01) == 0x00) && (firstPress == 0)) {
-				state = buttPress;
-			}
-			
 			else { //else go to next part of sequence
 				state = D;
 			}
 			break;
 
-		case D:  
-			if ( ((tmpA & 0x01) == 0x01) && (firstPress == 1)) { //button pressed 1st time
-				state = buttPress;
-				firstPress = 0;	
-			}
-			else if ( ((tmpA & 0x01) == 0x00) && (firstPress == 0)) {
-				state = buttPress;
+		case D: 
+			if ( (tmpA & 0x01) == 0x01 ) { //If button is pressed 
+				state = buttPress;	
 			}
 			else { //else go to next part of sequence
 				state = A;
@@ -148,8 +128,7 @@ void Tick() {
 
 		case Wait:  
 			if ( (tmpA & 0x01) == 0x01 ) { //If button is pressed 
-				state = A;
-				//tmpC = 0x01;	
+				state = A;	
 			}
 			else { //else if button not pressed, just stay 
 				state = Wait;
