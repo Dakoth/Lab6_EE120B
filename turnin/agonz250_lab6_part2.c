@@ -87,12 +87,18 @@ void Tick() {
 				state = buttPress;
 				firstPress = 0;	
 			}
+
+			//After releasing the button after the second time, able to be paused  normally as above  
 			else if ( ((tmpA & 0x01) == 0x00) && (firstPress == 0)) {
-				state = buttPress;
+				//state = buttPress;
+				state = B;
+				firstPress = 1;
+				
 			}
 			
 			else { //else go to next part of sequence
 				state = B;
+				//firstPress = 1; //ADDED 
 			}
 			break;
 
@@ -101,8 +107,11 @@ void Tick() {
 				state = buttPress;
 				firstPress = 0;	
 			}
+			//CHANGED
 			else if ( ((tmpA & 0x01) == 0x00) && (firstPress == 0)) {
-				state = buttPress;
+				//state = buttPress;
+				state = C;
+				firstPress = 1;
 			}
 			
 			else { //else go to next part of sequence
@@ -115,8 +124,11 @@ void Tick() {
 				state = buttPress;
 				firstPress = 0;	
 			}
+			//CHANGED 
 			else if ( ((tmpA & 0x01) == 0x00) && (firstPress == 0)) {
-				state = buttPress;
+				//state = buttPress;
+				state = D;
+				firstPress = 1;
 			}
 			
 			else { //else go to next part of sequence
@@ -129,8 +141,11 @@ void Tick() {
 				state = buttPress;
 				firstPress = 0;	
 			}
+			//CHANGED
 			else if ( ((tmpA & 0x01) == 0x00) && (firstPress == 0)) {
-				state = buttPress;
+				//state = buttPress;
+				state = A;
+				firstPress = 1;
 			}
 			else { //else go to next part of sequence
 				state = A;
